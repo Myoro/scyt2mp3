@@ -9,7 +9,7 @@ def quit():
   exit(1)
 
 def validLink(link):
-  if re.match(r'https://www\.youtube\.com/watch\?v=[\w-]+', sys.argv[i]) is not None:
+  if re.match(r'https://www\.youtube\.com/watch\?v=[\w-]+', link) is not None:
     return True
   elif re.match(r'https://youtu\.be/[\w-]+', link) is not None:
     return True
@@ -34,22 +34,44 @@ if len(sys.argv) == 1 or len(sys.argv) == 2 and sys.argv[1] == '--help':
   print('3) scyt2mp3 -t <file> -o <directory>')
   print('- Converts a file with links to <directory> or the directory you are in if -o not specified')
   print('- Links in the file must be seperated with line breaks, no commas allowed')
+  exit(0)
 
 if len(sys.argv) == 2 or (len(sys.argv) > 2 and (sys.argv[1] != '-l' and sys.argv[1] != '-t')):
   quit()
 
-# Grabbing links
+# Grabbing links and directory
 links = []
+directory = None
 if sys.argv[1] == '-l':
   for i in range(2, len(sys.argv)):
-    if sys.argv[i] != '-d':
+    if sys.argv[i] != '-o':
       if validLink(sys.argv[i]):
         links.append(sys.argv[i])
       else:
         quit()
     else:
-      break
+      if(i == len(sys.argv) - 1):
+        quit()
+      else:
+        if os.path.exists(sys.argv[i + 1]):
+          directory = sys.argv[i + 1]
+          break
+        else:
+          quit()
 elif sys.argv[1] == '-t':
-  print('text file')
+  if os.path.isfile(sys.argv[2]):
+    with open(sys.argv[2], 'r') as file:
+      lines = file.readlines()
+      for line in lines:
+        if validLink(line):
+          links.append(line)
+    if len(sys.argv) == 4:
+      quit()
+    elif sys.argv[3] == '-o' and len(sys.argv) == 5:
+      if os.path.exists(sys.argv[4]):
+        directory = sys.argv[4]
+  else:
+    quit()
 
 print(links)
+print(directory)
