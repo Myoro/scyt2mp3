@@ -7,7 +7,7 @@ import yt_dlp
 
 def quit():
   print('Bad input')
-  exit(1)
+  sys.exit(1)
 
 def validLink(link):
   if re.match(r'https://www\.youtube\.com/watch\?v=[\w-]+', link) is not None:
@@ -35,7 +35,7 @@ if len(sys.argv) == 1 or len(sys.argv) == 2 and sys.argv[1] == '--help':
   print('3) scyt2mp3 -t <file> -o <directory>')
   print('- Converts a file with links to <directory> or the directory you are in if -o not specified')
   print('- Links in the file must be seperated with line breaks, no commas allowed')
-  exit(0)
+  sys.exit(0)
 
 if len(sys.argv) == 2 or (len(sys.argv) > 2 and (sys.argv[1] != '-l' and sys.argv[1] != '-t')):
   quit()
