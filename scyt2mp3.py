@@ -3,6 +3,7 @@
 import os
 import sys
 import re
+import yt_dlp
 
 def quit():
   print('Bad input')
@@ -73,5 +74,9 @@ elif sys.argv[1] == '-t':
   else:
     quit()
 
-print(links)
-print(directory)
+
+for link in links:
+  yt_dlp.YoutubeDL({
+    'format': 'bestaudio/best',
+    'outtmpl': './%(title)s.mp3' if directory is None else os.path.join(directory, '%(title)s.mp3')
+  }).download(link)
