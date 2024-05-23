@@ -33,7 +33,7 @@ if len(sys.argv) == 1 or len(sys.argv) == 2 and sys.argv[1] == '--help':
   print('   - youtube.com/...')
   print('   - soundcloud.com/<artist>/<song>')
   print('3) scyt2mp3 -t <file> -o <directory>')
-  print('- Converts a file with links to <directory> or the directory you are in if -o not specified')
+  print('- Converts a file (i.e. a .txt) with links to <directory> or the directory you are in if -o not specified')
   print('- Links in the file must be seperated with line breaks, no commas allowed')
   sys.exit(0)
 
